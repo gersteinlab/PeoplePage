@@ -1,0 +1,90 @@
+svg text {
+  font-family: sans-serif;
+  font: bold;
+  font-size: 15px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: auto;
+  fill: white;
+}
+
+div#page {
+  width: 100%;
+  height: 100%;
+}
+
+div#main-index {
+  margin: 0 auto;
+  width: 60%;
+  min-width: 400px;
+}
+
+div#main-info {
+  margin: 0 auto;
+  width: 90%;
+  min-width: 700px;
+}
+
+div#main-alum {
+  margin: 0 auto;
+  width: 75%;
+  min-width: 750px;
+}
+
+div#menu {
+  font-size: 18px;
+  width: 600px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+div#menu a {
+  color: #993333;
+}
+
+table {
+ table-layout: fixed;
+ width: 100%;
+ white-space: normal;
+}
+
+table td {
+  color: #4A4A4A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+table a, a:active, a:visited, a:link{
+  color:#4A4A4A;
+}
+
+table.member-type td{
+  width: 300px;
+  height: 40px;
+}
+
+table.member-data td{
+  height: auto;
+  text-align: start;
+  vertical-align: middle;
+}
+
+div#extra-links p {
+  color: #000000;
+}
+
+div#extra-links a {
+  color: #0e3bb1;
+}
+
+div#main-curr-full table td{
+  max-width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: break-word;
+}
+
+@media print {
+    a:after { content:''; }
+    a[href]:after { content: none !important; }
+}
