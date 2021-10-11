@@ -65,8 +65,8 @@ def html_section_individual(file, section_data):
 def html_section_individual_affiliate(file, section_data):
     for individual in section_data:
         (abbr, first_name, last_name, institution, position, website, linkedin) = individual
-        
-        # same color for all affiliate    
+
+        # same color for all affiliate
         svg_color = "#58B2DC"
 
         # link personal website to name
@@ -74,7 +74,7 @@ def html_section_individual_affiliate(file, section_data):
             name_str = """{first_name} {last_name}""".format(first_name=first_name, last_name=last_name)
         else:
             name_str = """<a href="{website}">{first_name} {last_name}</a>""".format(first_name=first_name, last_name=last_name, website=website)
-        
+
         if linkedin==" ":
             linkedin_str = ""
         else:
@@ -85,12 +85,16 @@ def html_section_individual_affiliate(file, section_data):
                 <text x="9px" y="10px" font-weight="bold">in</text>
               </svg>
             </a>""".format(linkedin=linkedin)
+        if position == " " and institution == " ":
+            job_str = ""
+        else:
+            job_str = position+" @ "+institution
 
         # html output
         file.write("""
               <tr>
                 <td width="5px"></td>
-                <td width="45px"> 
+                <td width="45px">
                   <a href="https://www.ncbi.nlm.nih.gov/pubmed?cmd=PureSearch&dispmax=200&relpubdate=No%20Limit&term=%28%28Gerstein%20Mark%5BAuthor%5D%20NOT%20%281957%5Bdp%5D%20%3A%201990%5Bdp%5D%29%29%29%20AND%20{last_name}%20{first_name}">
                     <svg height="35px" width="35px">
                       <circle cx="17.5px" cy="17.5px" r="17" fill="{svg_color}"/>
@@ -101,8 +105,8 @@ def html_section_individual_affiliate(file, section_data):
                 </td>
                 <td width="23px">{linkedin_str}</td>
                 <td valign="middle"><p style="font-size:18px; font-family:arial;"><b>{name_str}</b></p></td>
-                <td valign="middle"><p style="font-size:18px; font-family:arial;display: inline;">{position} @ {institution}</p></td>
-              </tr>""".format(first_name=first_name, last_name=last_name, abbr=abbr, svg_color=svg_color, name_str=name_str, position=position, institution=institution, linkedin_str=linkedin_str))
+                <td valign="middle"><p style="font-size:18px; font-family:arial;display: inline;">{job_str}</p></td>
+              </tr>""".format(first_name=first_name, last_name=last_name, abbr=abbr, svg_color=svg_color, name_str=name_str, job_str=job_str, linkedin_str=linkedin_str))
     return
 ## end of functions
 
