@@ -83,6 +83,16 @@ for category in categories:
     get_google_contact_flat_file(section_data, f, "Curr")
 f.close()
 
+## Curr all without initial
+f = open("/var/www/www/people/files/people_out_undergrad_misc.csv", "w")
+f.write("Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name Yomi,Additional Name Yomi,Family Name Yomi,Name Prefix,Name Suffix,Initials,Nickname,Short Name,Maiden Name,Birthday,Gender,Location,Billing Information,Directory Server,Mileage,Occupation,Hobby,Sensitivity,Priority,Subject,Notes,Group Membership,E-mail 1 - Type,E-mail 1 - Value,E-mail 2 - Type,E-mail 2 - Value,E-mail 3 - Type,E-mail 3 - Value,Phone 1 - Type,Phone 1 - Value,Phone 2 - Type,Phone 2 - Value\n")
+
+for category in ['undergrad', 'misc']:
+    section_data_df = pd.DataFrame(func.get_section_data(df, 'Curr', category, info_col))
+    section_data = section_data_df[section_data_df[6]=="--"].values # only people without initial
+    get_google_contact_flat_file(section_data, f, "Curr")
+f.close()
+
 ## Alum
 f = open("/var/www/www/people/files/people_out_alum.csv", "w")
 f.write("Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name Yomi,Additional Name Yomi,Family Name Yomi,Name Prefix,Name Suffix,Initials,Nickname,Short Name,Maiden Name,Birthday,Gender,Location,Billing Information,Directory Server,Mileage,Occupation,Hobby,Sensitivity,Priority,Subject,Notes,Group Membership,E-mail 1 - Type,E-mail 1 - Value,E-mail 2 - Type,E-mail 2 - Value,E-mail 3 - Type,E-mail 3 - Value,Phone 1 - Type,Phone 1 - Value,Phone 2 - Type,Phone 2 - Value\n")
