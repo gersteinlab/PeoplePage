@@ -75,6 +75,7 @@ categories = [
     'research scientist',
     'postdoc',
     'grad',
+    'postgrad',
     'undergrad',
     'misc']
 
@@ -83,6 +84,7 @@ categories_title = [
     'Past Research Scientists',
     'Past Postdoctoral Associates and Fellows',
     'Past Graduate Students',
+    'Past Postgrads',
     'Past Undergrad Students',
     'Past Misc']
 
