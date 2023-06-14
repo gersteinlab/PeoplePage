@@ -113,7 +113,9 @@ def html_print_header(file, header):
 
 def get_section_data(full_df, status, category, col):
     """
-    Get the data from full sheet and filter as needed
+    Get the data from full sheet and filter as needed.
+    Return as numpy array. Order of the columns is the same as col parameter.
+    Notice any empty data will be replaced by " " (length ONE space)
 
     Parameter:
         full_df: df object of the full google sheet

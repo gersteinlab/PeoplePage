@@ -1,5 +1,8 @@
 #!/usr/bin/python2.7
 # -*- coding:utf-8 -*-
+"""
+Run all scripts and reture a webpage that print success info
+"""
 
 import gsheet_download
 import people_page_curr

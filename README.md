@@ -3,6 +3,16 @@
 GitHub repository for people page scripts
 For more information, please visit lab [private wiki](http://wiki.gersteinlab.org/labinfo/People_Page)
 
+## Requirement
+#### for google sheet interaction
+- gspread (v0.2.5)
+- oauth2client (v1.2)
+Notice that as of Jun 13 2023, gspread had been updated significantly (v5.7.2) and oauth2client is deprecated.
+#### for data process
+- numpy
+- pandas
+
+
 ## Directories
 All files are hold on www.gersteinlab.org server  
 /Folder-In-This-Repo -> /Actual/Location/In/Server

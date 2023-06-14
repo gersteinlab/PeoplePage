@@ -27,6 +27,7 @@ categories = [
     'undergrad',
     'misc']
 
+# print update date
 f.write("""<html>
 <head>
   <title>Gerstein Bioinformatics Group Members</title>
@@ -39,6 +40,7 @@ f.write("""<html>
 <br />
 <div style="margin-left: 20px;">""".format(daynow=date.today().strftime("%Y-%m-%d")))
 
+# find abbreviation not equal to "--"
 for category in categories:
     section_data = func.get_section_data(df, 'Curr', category, info_col)
     abbrevs = pd.DataFrame(section_data)[2].values

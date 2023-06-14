@@ -1,10 +1,13 @@
 #!/usr/bin/python2.7
 # -*- coding:utf-8 -*-
+"""
+This script generate the alum page
+"""
 
 import pandas as pd
 import func
 
-## start of functions
+## ---- start of functions ----
 def html_section_individual(file, section_data, current_mentors):
     for individual in section_data:
         (abbr, first_name, last_name, mentored_by, institution, position, website, netid, start_date, end_date) = individual
@@ -23,13 +26,13 @@ def html_section_individual(file, section_data, current_mentors):
         if end_date == " ":
             end_date = "?"
         
-        # get mentors, and check if any are still current members
+        # get mentors
+        # if any one of the mentors is still a current member
+        # change the initial icon color
         if not mentored_by == " ":
             mentors = mentored_by.replace(" ", "").replace("ars+", "").split(",")
-            #mentored_by = "Mentored by: " + mentored_by
-
             if any([m in current_mentors for m in mentors]):
-                    svg_color = "#75bee6"
+                svg_color = "#75bee6"
             
         # html output
         file.write("""
@@ -50,7 +53,7 @@ def html_section_individual(file, section_data, current_mentors):
                 <td> <font size="+0" face="Arial,Helvetica,Sans-serif">{mentored_by}</font></td>
               </tr>""".format(abbr=abbr, svg_color=svg_color, name_str=name_str, position=position, institution=institution, start_date=start_date, end_date=end_date, netid=netid,  mentored_by=mentored_by))
     return
-## end of functions
+## ---- end of functions ----
 
 
 ## read data
@@ -103,6 +106,7 @@ info_col = [
 # get list of current people with initials (potential mentors)
 current_mentors = df[df["Status"] == "Curr"]["abbrev"].dropna().tolist()
 
+# html
 for category, category_title in zip(categories, categories_title):  
     section_data = func.get_section_data(df, 'Alum', category, info_col)
     func.html_section_start(f, category_title)

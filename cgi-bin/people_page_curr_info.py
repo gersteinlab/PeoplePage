@@ -1,27 +1,25 @@
 #!/usr/bin/python2.7
 # -*- coding:utf-8 -*-
+"""
+This script generate the info page for current people
+"""
 
 import pandas as pd
 import func
 
-## start of functions
+## ---- start of functions ----
 def html_section_individual(file, section_data):
     for individual in section_data:
-        (abbr, first_name, last_name, room, start_date, netid, ymail, email, phone, era) = individual
+        (abbr, first_name, last_name, start_date, netid, ymail, email, phone, era) = individual
 
-        # Color the icon based on the room
-        room2color = {"Bass 426": "#993333", 
-                      "Bass 428": "#3ba63c",
-                      "Bass 432": "#0F4D92",
-                      "Bass 432A": "#0F4D92"}
-        if room in room2color.keys():
-            svg_color = room2color[room]
-        else:
-            svg_color = "#4472c0"
+        # default icon color
+        svg_color = "#4472c0"
+        # people w/o initial is grey
         if abbr == "--":
-            svg_color = "#cccccc"
+            svg_color = "#dedede"
 
-        # indicator for any other columns
+        # for columns of private information, show indicator
+        # tick for having the info, cross for not
         indicator_data = []
         indicator_col = (ymail, email, phone, era)
         for col in indicator_col:
@@ -43,13 +41,12 @@ def html_section_individual(file, section_data):
                   </svg>
                 </td>
                 <td><font size="+1" face="Arial,Helvetica,Sans-serif"><b>{first_name} {last_name}</b></font></td>
-                <td><font size="+0" face="Arial,Helvetica,Sans-serif">{room}</font></td>
                 <td><font size="+0" face="Arial,Helvetica,Sans-serif">{Sdate}</font></td>
                 <td><font size="+0" face="Arial,Helvetica,Sans-serif">{netid}</font></td>
                 {indicator_data}
-              </tr>""".format(abbr=abbr, svg_color=svg_color, first_name=first_name, last_name=last_name, room=room, Sdate=start_date, netid=netid, indicator_data=indicator_data))
+              </tr>""".format(abbr=abbr, svg_color=svg_color, first_name=first_name, last_name=last_name, Sdate=start_date, netid=netid, indicator_data=indicator_data))
     return
-## end of functions
+## ---- end of functions ----
 
 
 ## read data
@@ -61,7 +58,6 @@ func.html_start(f, "info")
 
 # add header of the main table
 col_header = [
-    'Room',
     'StartDate',
     'NetID',
     'YaleEmail',
@@ -83,7 +79,7 @@ categories = [
 categories_title = [
     'Principal Investigator',
     'Laboratory Staff',
-    ' Research Scientists',
+    'Research Scientists',
     'Postdoctoral Associates and Fellows',
     'Graduate Students',
     'Full-time Postgrads',
@@ -93,7 +89,6 @@ info_col = [
     'abbrev',
     'FirstName',
     'LastName',
-    'RoomNumber',
     'LabStartDate',
     'NetID',
     'YaleEmail',
