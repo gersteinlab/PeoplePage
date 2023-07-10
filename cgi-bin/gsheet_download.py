@@ -1,42 +1,47 @@
 #!/usr/bin/python2.7
 # -*- coding:utf-8 -*-
-"""
-This script download the online google sheet to a local file.
-Notice the api may have a rate limit. So you may encounter error 
-if you download too many times in a short time window. Just wait 
-a few minutes and it should be good.
-"""
 
-import cgi
-import cgitb
-cgitb.enable()
-
+import os.path
 import pandas as pd
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
-# Give permission and access the gsheet
-scope = [
-    "https://spreadsheets.google.com/feeds",
-    "https://www.googleapis.com/auth/drive"]
-credentials = ServiceAccountCredentials.from_json_keyfile_name("./PeoplePage-005019a507ba.json", scope)
-gc = gspread.authorize(credentials)
-wks = gc.open_by_url("https://docs.google.com/spreadsheets/d/1c8zJleXcZIlb4dULmlUBPtRGvtdzzA4NzZZGoEhNzlI/edit?hl=en&hl=en#gid=0").get_worksheet(0)
+#### Below is the official tutorial from https://developers.google.com/sheets/api/quickstart/python
 
-# Convert the gspread worksheet instance to pandas dataframe
-number_people = len(wks.col_values(2))
-number_col = len(wks.row_values(1))
+# If modifying these scopes, delete the file token.json.
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
-all_data = []
-for i in range(1,number_col+1):
-    curr_col = wks.col_values(i)
-    while len(curr_col) < number_people:
-        curr_col.append("")
-    all_data.append(curr_col)
+creds = None
+if os.path.exists('token.json'):
+    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+# If run for the first time, generate the token.json from credentials.json
+# This might not be able to do in the server, as it will pop up a web browser asking you to login
+# Copy this script and the credentials.json file to your local computer. Run the script and it will generate the token.json
+# Copy the token.json back to the server
+if not creds or not creds.valid:
+    if creds and creds.expired and creds.refresh_token:
+        creds.refresh(Request())
+    else:
+        flow = InstalledAppFlow.from_client_secrets_file(
+            'credentials.json', SCOPES)
+        creds = flow.run_local_server(port=0)
+    with open('token.json', 'w') as token:
+        token.write(creds.to_json())
 
-df = pd.DataFrame(all_data).transpose()
-df.columns = df.iloc[0]
-df = df.reindex(df.index.drop(0))
 
-# save the main gsheet to local file
-df.to_csv("/var/www/cgi-bin/people/MBGLab-PublicPeopleData.csv", sep=",", index=False, encoding="utf-8")
+# The ID and range of the spreadsheet
+SAMPLE_SPREADSHEET_ID = '1c8zJleXcZIlb4dULmlUBPtRGvtdzzA4NzZZGoEhNzlI'
+SAMPLE_RANGE_NAME = 'People_Profile!A:AG'
+
+# Access the gsheet
+service = build('sheets', 'v4', credentials=creds)
+sheet = service.spreadsheets()
+result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME).execute()
+values = result.get('values', [])
+
+# Save as pandas dataframe
+df = pd.DataFrame(values)
+df.to_csv("./MBGLab-PublicPeopleData.csv", sep=",", index=False, header=False, encoding="utf-8")
