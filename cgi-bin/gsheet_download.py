@@ -14,22 +14,21 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
-creds = None
-if os.path.exists('token.json'):
-    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-# If run for the first time, generate the token.json from credentials.json
-# This might not be able to do in the server, as it will pop up a web browser asking you to login
-# Copy this script and the credentials.json file to your local computer. Run the script and it will generate the token.json
-# Copy the token.json back to the server
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            'credentials.json', SCOPES)
-        creds = flow.run_local_server(port=0)
-    with open('token.json', 'w') as token:
-        token.write(creds.to_json())
+creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+## If run for the first time, generate the token.json from credentials.json
+## This might not be able to do in the server, as it will pop up a web browser asking you to login
+## Copy this script and the credentials.json file to your local computer. Run the script and it will generate the token.json
+## Copy the token.json back to the server
+
+#if not creds or not creds.valid:
+#    if creds and creds.expired and creds.refresh_token:
+#        creds.refresh(Request())
+#    else:
+#        flow = InstalledAppFlow.from_client_secrets_file(
+#            'credentials.json', SCOPES)
+#        creds = flow.run_local_server(port=0)
+#    with open('token.json', 'w') as token:
+#        token.write(creds.to_json())
 
 
 # The ID and range of the spreadsheet
