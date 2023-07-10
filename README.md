@@ -5,9 +5,9 @@ For more information, please visit lab [private wiki](http://wiki.gersteinlab.or
 
 ## Requirement
 #### for google sheet interaction
-- gspread (v0.2.5)
-- oauth2client (v1.2)
-Notice that as of Jun 13 2023, gspread had been updated significantly (v5.7.2) and oauth2client is deprecated.
+- google-api-python-client
+- google-auth-httplib2
+- google-auth-oauthlib
 #### for data process
 - numpy
 - pandas

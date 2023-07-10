@@ -183,13 +183,16 @@ for category, category_title in zip(categories, categories_title):
 
 ## On leave members section
 info_col = [
-	'abbrev',
-	'FirstName',
-	'LastName',
-	'Website',
-	'LinkedIn',
-    'Twitter'
-]
+    'abbrev',
+    'FirstName',
+    'LastName',
+    'JobTitle',
+    'MentoredBy',
+    'Website',
+    'RoomNumber',
+    'Linkedin',
+    'Comment',
+    'Twitter']
 
 # data
 df_onleave = df[df['Status'] == "OnLeave"]
